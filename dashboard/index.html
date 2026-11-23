@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="dot" aria-hidden="true"></span><span>TOKEN RADAR</span></div>
+  <p class="tag">Every protocol whose token does not exist yet, ranked by what its token would be worth.</p>
+  <p class="meta" id="meta">Loading the snapshot…</p>
+</header>
+<nav class="controls" aria-label="Board controls">
+  <label>Search <input id="q" type="search" placeholder="name or slug…" autocomplete="off"></label>
+  <label>Category <select id="cat"><option value="">All categories</option></select></label>
+  <label>Chain <select id="chain"><option value="">All chains</option></select></label>
+  <label>View <select id="view"><option value="pre">Pre-token board</option><option value="live">Already trading</option></select></label>
+  <label>Sort <select id="sort"><option value="rank">By rank</option><option value="implied">By implied value</option><option value="tvl">By TVL</option><option value="growth">By 7-day growth</option></select></label>
+</nav>
+<main>
+  <section id="detail" class="detail" hidden></section>
+  <section id="boardwrap">
+    <table id="board">
+      <thead><tr>
+        <th data-k="rank">#</th><th data-k="name">Protocol</th><th data-k="category">Category</th>
+        <th data-k="chains">Chains</th><th data-k="tvl">TVL</th><th data-k="growth">7d</th>
+        <th data-k="age">Age</th><th data-k="implied">Implied value</th><th>Signal</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="count" id="count"></p>
+  </section>
+  <section class="model" id="model">
+    <h2>How the radar scores</h2>
+    <p>Implied value = TVL × category multiple × growth factor × tenure factor × chain factor × plausibility. Every factor comes from the snapshot's own figures: the protocol's TVL, its seven-day growth, how long it has run, how many chains it runs on, and whether a token launch is plausible for it at all.</p>
+    <ul>
+      <li><b>Category multiple</b> — the FDV/TVL ratio the category typically commands: exchanges 0.10, bridges and wrappers 0.12–0.16, lending and derivatives 0.34–0.38, DEXes 0.42, chains 0.45.</li>
+      <li><b>Growth factor</b> — 1 + the seven-day TVL change, clamped to −40%…+120%, over 250.</li>
+      <li><b>Tenure factor</b> — 0.75 for a brand-new protocol, rising to 1.00 at five years; unknown age scores 0.85.</li>
+      <li><b>Chain factor</b> — 1.00 on one chain, +0.04 per extra chain, up to 1.20.</li>
+      <li><b>Plausibility</b> — 1.00 normally; 0.10 for an exchange, which is a company, not a protocol launch; 0.25 for a bridge or a wrapped or staked product of a token that already trades; 0.50 for a staking pool; 0.40 when the name says wrapped, staked or staking, or starts with an exchange's name.</li>
+    </ul>
+    <p class="fine">The implied value is this radar's own claim, never make.fun's. It does not predict whether or when a token is issued. A protocol DefiLlama records no token for may still have one its record does not carry; the board says a protocol records no token, never that it has none. Farm plans are a starting point, not advice: check the protocol yourself before you deposit anything.</p>
+  </section>
+</main>
+<footer class="foot"><span id="foot"></span></footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
